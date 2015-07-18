@@ -18,7 +18,10 @@ Then you must install into your Django project by adding "smart_load_tag" to you
 
 If you want to use django-smart-load-tag without loading it into every template, you can install it globally by adding it to your builtin tags. Just add the following to your urlconf (usually urls.py)::
 
-    from django.template import add_to_builtins
+    try:
+        from django.template.base import add_to_builtins
+    except ImportError:  # Django < 1.8
+        from django.template import add_to_builtins
     add_to_builtins('smart_load_tag.templatetags.smart_load')
 
 introduction

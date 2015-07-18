@@ -1,5 +1,18 @@
-from django.template import Library, TemplateSyntaxError, InvalidTemplateLibrary, get_templatetags_modules, import_library
+from django.template import Library
+from django.template import TemplateSyntaxError
 
+try:
+    from django.template import InvalidTemplateLibrary
+except: # 1.8
+    from django.template.library import InvalidTemplateLibrary
+
+from django.template import get_templatetags_modules
+
+try: 
+    from django.template import import_library
+except: # 1.8
+    from django.template.library import import_library
+    
 def load(parser, lib, tag='*', name=None, namespace=None, app=None):
     """
     Determine and load tags into parser.
@@ -39,6 +52,29 @@ def load(parser, lib, tag='*', name=None, namespace=None, app=None):
         parser.add_library(lib)
     except InvalidTemplateLibrary, e:
         raise TemplateSyntaxError("'%s' is not a valid tag library: %s" % (lib, e))
+
+def get_templatetags_modules():
+    """
+    Return the list of all available template tag modules.
+
+    Caches the result for faster access.
+    """
+    global templatetags_modules
+    if not templatetags_modules:
+        _templatetags_modules = []
+        # Populate list once per process. Mutate the local list first, and
+        # then assign it to the global name to ensure there are no cases where
+        # two threads try to populate it simultaneously.
+        for app_module in ['django'] + list(settings.INSTALLED_APPS):
+            try:
+                templatetag_module = '%s.templatetags' % app_module
+                import_module(templatetag_module)
+                _templatetags_modules.append(templatetag_module)
+            except ImportError:
+                continue
+        templatetags_modules = _templatetags_modules
+    return templatetags_modules
+
 
 def get_library(library_name, app_name=None):
     """
