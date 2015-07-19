@@ -63,7 +63,8 @@ def get_templatetags_modules():
 
     Caches the result for faster access.
     """
-    global templatetags_modules
+    #global templatetags_modules
+    templatetags_modules = None
     if not templatetags_modules:
         _templatetags_modules = []
         # Populate list once per process. Mutate the local list first, and
