@@ -1,3 +1,4 @@
+django-nose
 -e git+https://github.com/philippeowagner/django-smart-load-tag.git#egg=smart_load_tag
 
 
