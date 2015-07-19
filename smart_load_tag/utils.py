@@ -7,7 +7,8 @@ except: # 1.8
     # later from django.template.library import InvalidTemplateLibrary
     from django.template.base import InvalidTemplateLibrary
     
-from django.template import get_templatetags_modules
+#FIXME: copy pasted currently, see below 
+# from django.template import get_templatetags_modules
 
 try: 
     from django.template import import_library
