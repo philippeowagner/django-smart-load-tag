@@ -1,5 +1,6 @@
 from django.template import Library
 from django.template import TemplateSyntaxError
+from django.conf import settings
 
 try:
     from django.template import InvalidTemplateLibrary
