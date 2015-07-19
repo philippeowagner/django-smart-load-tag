@@ -10,8 +10,9 @@ from django.template import get_templatetags_modules
 
 try: 
     from django.template import import_library
-except: # 1.8
-    from django.template.library import import_library
+except: 
+    # 1.8
+    from django.template.base import import_library
     
 def load(parser, lib, tag='*', name=None, namespace=None, app=None):
     """
