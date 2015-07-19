@@ -9,7 +9,7 @@ import sys
 
 from django.conf import settings
 
-from smart_load_tag.tests import test_settings
+from .tests.testproject import settings as test_settings
 
 if not settings.configured:
     settings.configure(**test_settings.__dict__)
