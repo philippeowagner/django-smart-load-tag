@@ -7,16 +7,20 @@ from importlib import import_module # works for Python >= 2.7
 try:
     from django.template import InvalidTemplateLibrary
 except: # 1.8
-    # later from django.template.library import InvalidTemplateLibrary
+    # later it will change again...
+    # > 1.8  from django.template.library import InvalidTemplateLibrary
     from django.template.base import InvalidTemplateLibrary
     
-#FIXME: copy pasted currently, see below 
-# from django.template import get_templatetags_modules
-
+try:
+    from django.template import get_templatetags_modules
+except ImportError:
+    # 1.8
+    from django.template.base import get_templatetags_modules
+    
 try: 
     from django.template import import_library
 except: 
-    # 1.8
+    # 1.8, same as above.
     from django.template.base import import_library
     
 def load(parser, lib, tag='*', name=None, namespace=None, app=None):
@@ -59,7 +63,8 @@ def load(parser, lib, tag='*', name=None, namespace=None, app=None):
     except InvalidTemplateLibrary, e:
         raise TemplateSyntaxError("'%s' is not a valid tag library: %s" % (lib, e))
 
-def get_templatetags_modules():
+
+def get_templatetags_modules__void__():
     """
     Return the list of all available template tag modules.
 
