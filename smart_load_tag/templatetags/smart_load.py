@@ -1,4 +1,11 @@
-from django.template import Library, Node
+ 
+try: 
+    from django.template import Library, Node
+except: 
+    # 1.8
+    from django.template.base import Library, Node
+    
+
 from smart_load_tag.utils import load
 
 register = Library()
