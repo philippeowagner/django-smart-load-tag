@@ -2,6 +2,8 @@ from django.template import Library
 from django.template import TemplateSyntaxError
 from django.conf import settings
 
+from importlib import import_module # works for Python >= 2.7
+
 try:
     from django.template import InvalidTemplateLibrary
 except: # 1.8
