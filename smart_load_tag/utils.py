@@ -4,8 +4,9 @@ from django.template import TemplateSyntaxError
 try:
     from django.template import InvalidTemplateLibrary
 except: # 1.8
-    from django.template.library import InvalidTemplateLibrary
-
+    # later from django.template.library import InvalidTemplateLibrary
+    from django.template.base import InvalidTemplateLibrary
+    
 from django.template import get_templatetags_modules
 
 try: 
